@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "55f9bc82-629b-4783-8dc8-f4c76cf418a2": {
+      "ProjectGuid": "55f9bc82-629b-4783-8dc8-f4c76cf418a2",
+      "DisplayName": "ConsoleFileExplorer",
+      "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 1
+}
