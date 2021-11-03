@@ -13,12 +13,14 @@ namespace ConsoleFileExplorer
         private int _pos;
         private string _currentView;
         private string[] _in;
-       // ------------------------------------------------
+    
+        // ------------------------------------------------
         public string ParentFolderPath
         { get { return Convert.ToString(Directory.GetParent(_currentView)); } }
         public string CurrentFileName
         { get { return Path.GetFullPath(_in[_pos]); } }
-        public FolderView(string path)
+         
+          public FolderView(string path)
         {
             _currentView = path;
             _in = Directory.GetFileSystemEntries(path);
@@ -32,48 +34,57 @@ namespace ConsoleFileExplorer
         { return oldPath + Path.DirectorySeparatorChar + Dir; }
         public string Back()
         { return ParentFolderPath; }
-        //-----------------------------------------------
 
+        public void Yes()
+        {
+            ConsoleExplorer cosPlo = new ConsoleExplorer();
+            cosPlo.Key();       
+        
+        }
+        //----------------------------------------------- 
         public void PrintList()
         {
             Console.Clear();
             Console.WriteLine();
-            for (int i = 0; i < _entries.Length; i++)
+            for (int i = 0; i < _in.Length; i++)
             {
-                if (_position == i)
+                if (_pos == i)
                 {
-                    Console.BackgroundColor = ConsoleColor.Gray;
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    if (File.Exists(_entries[i]))
+                    Console.BackgroundColor = ConsoleColor.Magenta;
+                    Console.ForegroundColor = ConsoleColor.DarkBlue;
+                    if (File.Exists(_in[i]))
                     {
-                        Console.WriteLine($"- {Path.GetFileName(_entries[i])}");
-                        SelectedDir = "";
+                        Console.WriteLine($"- {Path.GetFileName(_in[i])}");
+                        Dir = "";
                     }
-                    if (Directory.Exists(_entries[i]))
+                    if (Directory.Exists(_in[i]))
                     {
-                        SelectedDir = Path.GetFileName(_entries[i]);
-                        Console.WriteLine($"# {SelectedDir}");
+                        Dir = Path.GetFileName(_in[i]);
+                        Console.WriteLine($"# {Dir}");
                     }
                     Console.ResetColor();
                 }
                 else
                 {
-                    if (File.Exists(_entries[i]))
-                        Console.WriteLine($"- {Path.GetFileName(_entries[i])}");
-                    if (Directory.Exists(_entries[i]))
-                        Console.WriteLine($"# {Path.GetFileName(_entries[i])}");
+                    if (File.Exists(_in[i]))
+                        Console.WriteLine($"- {Path.GetFileName(_in[i])}");
+                    if (Directory.Exists(_in[i]))
+                        Console.WriteLine($"# {Path.GetFileName(_in[i])}");
                 }
 
             }
+            
             Console.WriteLine();
             Console.WriteLine("\nArray Position: ");
-            Console.WriteLine(_position);
+            Console.WriteLine(_pos);
             Console.WriteLine("\nCurrent Directory: ");
             Console.WriteLine(_currentView);
             Console.WriteLine("\nParent Directory: ");
             Console.WriteLine(ParentFolderPath);
             Console.WriteLine("\nSelected Directory: ");
-            Console.WriteLine(SelectedDir);
+            Console.WriteLine("\nPress Y to create textfile");
+            Console.WriteLine("");            
+            Console.WriteLine(Dir);
         }
 
     
