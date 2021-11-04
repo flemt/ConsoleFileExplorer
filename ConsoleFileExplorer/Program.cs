@@ -13,8 +13,8 @@ namespace ConsoleFileExplorer
         {
             ConsoleExplorer consoleExplorer = new();
             consoleExplorer.Run();
+       
         }
     }
 }
-
 
