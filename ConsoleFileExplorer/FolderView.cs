@@ -9,29 +9,32 @@ using System.Threading;
 namespace ConsoleFileExplorer
 
 
-        //  ██████╗ ██████╗  ██████╗ ██████╗ ███████╗██████╗ ████████╗██╗███████╗███████╗
-        //  ██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██╔════╝██╔══██╗╚══██╔══╝██║██╔════╝██╔════╝
-        //  ██████╔╝██████╔╝██║   ██║██████╔╝█████╗  ██████╔╝   ██║   ██║█████╗  ███████╗
-        //  ██╔═══╝ ██╔══██╗██║   ██║██╔═══╝ ██╔══╝  ██╔══██╗   ██║   ██║██╔══╝  ╚════██║
-        //  ██║     ██║  ██║╚██████╔╝██║     ███████╗██║  ██║   ██║   ██║███████╗███████║
-        //  ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝╚══════╝╚══════╝
-        //                                                                               
+//  ██████╗ ██████╗  ██████╗ ██████╗ ███████╗██████╗ ████████╗██╗███████╗███████╗
+//  ██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██╔════╝██╔══██╗╚══██╔══╝██║██╔════╝██╔════╝
+//  ██████╔╝██████╔╝██║   ██║██████╔╝█████╗  ██████╔╝   ██║   ██║█████╗  ███████╗
+//  ██╔═══╝ ██╔══██╗██║   ██║██╔═══╝ ██╔══╝  ██╔══██╗   ██║   ██║██╔══╝  ╚════██║
+//  ██║     ██║  ██║╚██████╔╝██║     ███████╗██║  ██║   ██║   ██║███████╗███████║
+//  ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝╚══════╝╚══════╝
+//                                                                               
 
 {
     class FolderView
-    {       
-     private string _File { get; set; }    
-     public string Dir { get; private set; }
+    {
+        private string _File { get; set; }
+        public string Dir { get; private set; }
+        public string SelectedDir { get; private set; }
 
-     private int _pos;
+        private int _pos;
 
-     private string _currentView;
+        private string _currentView;
 
-     private string[] _in;
+        private string[] _in;
+        public string SelectedFile { get; private set; }
 
-     public string ParentFolderPath { get { return Convert.ToString(Directory.GetParent(_currentView)); } }
-     public string CurrentFileName { get { return Path.GetFullPath(_in[_pos]); } }
-     public FolderView(string path) {_currentView = path; _in = Directory.GetFileSystemEntries(path); }
+        string path = Path.GetFullPath(".");
+        public string ParentFolderPath { get { return Convert.ToString(Directory.GetParent(_currentView)); } }
+        public string CurrentFileName { get { return Path.GetFullPath(_in[_pos]); } }
+        public FolderView(string path) { _currentView = path; _in = Directory.GetFileSystemEntries(path); }
 
         ///
         //  ██████╗ ██╗██████╗ ███████╗ ██████╗████████╗██╗ ██████╗ ███╗   ██╗███████╗   ██╗  ██╗███████╗██╗   ██╗
@@ -67,45 +70,42 @@ namespace ConsoleFileExplorer
 
         public void Create()
         {
-            for(; ;)
+            while (!false)
             {
-                var path = "@demofile1.txt";
                  Console.Clear();
-                  Console.WriteLine("You have chosen to create a file\n");
-                   Console.Write("Enter name of the file: ");
-                    var uInput = Console.ReadLine();
-                     var uFile = $"{uInput}.txt";
-                      Thread.Sleep(2000);
-                       var exists = File.Exists(path);
+                  string path = Path.GetFullPath(".");
+                   FolderView _folderView = new FolderView(path);
+                    Console.WriteLine("You have chosen to create a file\n");
+                     Console.WriteLine("Please write down your most frequently used password here: ");
+                      var uInput = Console.ReadLine();
+                       var uFile = $"{uInput}";
+                        Thread.Sleep(1000);
+                         Console.WriteLine($"Creating file..");
+                        var text = uFile;
+                       var file = new StreamWriter(_folderView.CurrentFileName, false, Encoding.UTF8);
+                      file.Write(uFile);
+                     Console.WriteLine("File Created!");
+                    Thread.Sleep(2000);
+                   file.Close();
+                  break;
+            }
 
-                         if (exists == true)
-                          {
-                            Console.WriteLine(exists);
-                             Console.WriteLine("Already a file with that name \n" +
-                              "Deleting file\n");                                                      
-                                Thread.Sleep(2000);
-                                 Console.WriteLine("Deleting file..");
-                                   try { 
-                                    File.Delete(path); Console.WriteLine("File deleted");}
-                                      catch (IOException ex)
-                                       {Console.WriteLine(ex.Message);}
+        }
+        public void DeleteFile()
+        {
+            Console.Clear();
+            Console.WriteLine($"Remove object?:\n");
+            Console.WriteLine($"\"{SelectedFile}\"?\n\nY/N\n");
+            ConsoleKey del = Console.ReadKey().Key;
+            if (del == ConsoleKey.Y)
+            {
+                File.Delete(SelectedFile);
+            }
+            else
+            {return; }
+        }
 
-                                         finally
-                                          {FileInfo fi = new FileInfo(path);
-                                            using (FileStream fs = fi.Create()){
-                                             Byte[] info = new UTF8Encoding(true).GetBytes("This is your fresh of the\n" +
-                                              "bandwagon file of text");
-                                                fs.Write(info, 0, info.Length);
-                                                 fs.Close();
-                                                  Console.WriteLine("File created");
-                                                                                       }
 
-                                                                                          }
-                    
-                                                                                             }
-                                                                                               break;
-                                                                                                      }
-                                                                                                         }
 
 
         //  ██████╗ ██████╗  █████╗ ██╗    ██╗     ██████╗ ██████╗ ███╗   ██╗███████╗ ██████╗ ██╗     ███████╗
@@ -118,47 +118,48 @@ namespace ConsoleFileExplorer
 
         public void PrintList()
         {
-
-             Console.WriteLine            ();
-               Console.WriteLine          ("\nArray Position: ");
-                 Console.WriteLine        (_pos);
-                   Console.WriteLine      ("\nCurrent Folder: ");
-                     Console.WriteLine    (_currentView);
-                       Console.WriteLine  ("\nParent Folder: ");
-                       Console.WriteLine  (ParentFolderPath);
-                      Console.WriteLine   ("\nSelected Folder: ");
-                     Console.WriteLine    ("\nPress c to create file");
-                    Console.WriteLine     ("");
-                   Console.WriteLine      (Dir);
-                  Console.Clear           ();
-                 Console.WriteLine        ();
-
-            for (var x = 0; x < _in.Length; x++)
+            Console.Clear();
+            Console.WriteLine();
+            for (int i = 0; i < _in.Length; i++)
             {
-                if (_pos == x)
+                Console.WriteLine();
+                Console.WriteLine("\nPosition in list: ");
+                Console.WriteLine(_pos);
+                Console.WriteLine("\nFolder: ");
+                Console.WriteLine(_currentView);
+                Console.WriteLine("\nParent Folder: ");
+                Console.WriteLine(ParentFolderPath);
+                Console.WriteLine("\nSelected Folder: ");
+                Console.WriteLine(Dir);
+                Console.WriteLine("\nSelected File: ");
+                Console.WriteLine(SelectedFile);
+                Console.WriteLine("\nPress c to create a file");
+                Console.WriteLine("\nc");
+
+                if (_pos == i)
                 {
-                    Console.BackgroundColor = ConsoleColor.Magenta;
-                      Console.ForegroundColor = ConsoleColor.DarkBlue;
-
-                    if (File.Exists(_in[x]))
-                    {   Console.WriteLine($"- {Path.GetFileName(_in[x])}");
-                        Dir = ""; }
-
-                    if (Directory.Exists(_in[x]))
-                    {   Dir = Path.GetFileName(_in[x]);
-                        Console.WriteLine($"# {Dir}"); }
+                    Console.BackgroundColor = ConsoleColor.DarkBlue;
+                    Console.ForegroundColor = ConsoleColor.White;
+                    if (File.Exists(_in[i]))
+                    {   Console.WriteLine($"- {Path.GetFileName(_in[i])}");
+                        FileInfo fi = new FileInfo(Path.GetFileName(_in[i]));
+                        Dir = "";
+                        SelectedFile = fi.Name;}
+                    if (Directory.Exists(_in[i]))
+                    {   Dir = Path.GetFileName(_in[i]);
+                        SelectedFile = "";
+                        Console.WriteLine($"# {Dir}");}
                         Console.ResetColor();
                 }
                 else
-                {  if (File.Exists(_in[x])) Console.WriteLine($"- {Path.GetFileName(_in[x])}");
-                    if (Directory.Exists(_in[x])) Console.WriteLine($"# {Path.GetFileName(_in[x])}");
+                {if (File.Exists(_in[i])) Console.WriteLine($"- {Path.GetFileName(_in[i])}");
+                    if (Directory.Exists(_in[i])) Console.WriteLine($"# {Path.GetFileName(_in[i])}");
                 }
-
             }
-            
          
         }
 
-    
+
+
     }
 }

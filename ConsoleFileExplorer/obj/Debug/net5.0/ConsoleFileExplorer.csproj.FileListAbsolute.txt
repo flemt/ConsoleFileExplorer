@@ -9,7 +9,6 @@ C:\Users\Eric\Desktop\ConsoleFileExplorer-main\ConsoleFileExplorer\bin\Debug\net
 C:\Users\Eric\Desktop\ConsoleFileExplorer-main\ConsoleFileExplorer\bin\Debug\net5.0\ConsoleFileExplorer.dll
 C:\Users\Eric\Desktop\ConsoleFileExplorer-main\ConsoleFileExplorer\bin\Debug\net5.0\ref\ConsoleFileExplorer.dll
 C:\Users\Eric\Desktop\ConsoleFileExplorer-main\ConsoleFileExplorer\bin\Debug\net5.0\ConsoleFileExplorer.pdb
-C:\Users\Eric\Desktop\ConsoleFileExplorer-main\ConsoleFileExplorer\obj\Debug\net5.0\ConsoleFileExplorer.csproj.AssemblyReference.cache
 C:\Users\Eric\Desktop\ConsoleFileExplorer-main\ConsoleFileExplorer\obj\Debug\net5.0\ConsoleFileExplorer.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Eric\Desktop\ConsoleFileExplorer-main\ConsoleFileExplorer\obj\Debug\net5.0\ConsoleFileExplorer.AssemblyInfoInputs.cache
 C:\Users\Eric\Desktop\ConsoleFileExplorer-main\ConsoleFileExplorer\obj\Debug\net5.0\ConsoleFileExplorer.AssemblyInfo.cs
@@ -18,3 +17,4 @@ C:\Users\Eric\Desktop\ConsoleFileExplorer-main\ConsoleFileExplorer\obj\Debug\net
 C:\Users\Eric\Desktop\ConsoleFileExplorer-main\ConsoleFileExplorer\obj\Debug\net5.0\ref\ConsoleFileExplorer.dll
 C:\Users\Eric\Desktop\ConsoleFileExplorer-main\ConsoleFileExplorer\obj\Debug\net5.0\ConsoleFileExplorer.pdb
 C:\Users\Eric\Desktop\ConsoleFileExplorer-main\ConsoleFileExplorer\obj\Debug\net5.0\ConsoleFileExplorer.genruntimeconfig.cache
+C:\Users\Eric\Desktop\ConsoleFileExplorer-main\ConsoleFileExplorer\obj\Debug\net5.0\ConsoleFileExplorer.csproj.AssemblyReference.cache

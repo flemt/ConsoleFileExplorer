@@ -22,94 +22,80 @@ namespace ConsoleFileExplorer
         //             ░ ░      ░  ░   ░       ░  ░   ░           ░              ░                    
         //                           ░                                                                
 
-
-        public void ShowFolder()
+        private void ShowFolder()
         {
             string path = Path.GetFullPath(".");
             FolderView _folderView = new FolderView(path);
-            ViewState _viewstate = ViewState.List;
+            while (!false)
+            {   _folderView.PrintList();
+                ConsoleKey input = Console.ReadKey().Key;
+                if (input == ConsoleKey.DownArrow)
+                {_folderView.Up();}
 
-            if (_viewstate == ViewState.List)
-            {
-                while (!false)
-                {
-                    _folderView.PrintList();
+                else if (input == ConsoleKey.UpArrow)
+                {_folderView.Down();}
 
-                    ConsoleKey input = Console.ReadKey().Key;
-                    if (input == ConsoleKey.DownArrow)
-                    {
-                        _folderView.Up();
-                    }
-                    else if (input == ConsoleKey.UpArrow)
-                    {
-                        _folderView.Down();
-                    }
-                    else if (input == ConsoleKey.Spacebar)
-                    {
-                        _viewstate = ViewState.FileView;
-                        break;
-                    }
-                    else if (input == ConsoleKey.Enter)
-                    {
-                        path = _folderView.Forward(path);
-                        break;
-                    }
-                    else if (input == ConsoleKey.C)
-                    {
-                        _folderView.Create();
-                        break;
-                    }
-                    else if (input == ConsoleKey.Backspace)
-                    {
-                        path = _folderView.Back();
-                        break;
-                    }
-                    else
-                        continue;
-                }
-            }
+                else if (input == ConsoleKey.Spacebar)
+                {if (File.Exists(_folderView.CurrentFileName)){
+                ShowFileContent(_folderView);break;}
+                else {break;}}
 
-        }
+                else if (input == ConsoleKey.Enter)
+                {if (Directory.Exists(_folderView.Dir)) 
+                {path = _folderView.Forward(path); 
+                break;}else {break;} }
 
-        private void FileContent(FolderView _folderView)
-        {            
-            ViewState _viewstate = ViewState.List;
-            string breakLine = new string('-', 30);
-            if (_viewstate == ViewState.FileView)
-            {
-                Console.Clear();
-               // Console.WriteLine($"{_folderView.SelectedFile}\n{breakLine}");
-                for (; ; )
-                {
-                    var path = Path.GetFullPath(".");
-                    using var reader = new StreamReader(_folderView.CurrentFileName, Encoding.UTF8);
-                    {
-                        string line = "";
-                        while ((line = reader.ReadLine()) != null)
-                        { Console.WriteLine(line); }
-                    }
-                    Console.WriteLine("\nPress random button and return to Folder View 2000.");
-                    Console.ReadKey(); 
-                    break;                                    
-                }
-                _viewstate = ViewState.List;
-                return;
-            }
-        }
-        public void Run()
-        {
-            for (; ; )
-            {
-                ViewState _viewstate = ViewState.List;
+                else if (input == ConsoleKey.Backspace)
+                {path = _folderView.Back();break;}
 
-                if (_viewstate == ViewState.List)
-                {
-                    ShowFolder();
+                else if (input == ConsoleKey.C)
+                {_folderView.Create();break;}
+
+                else if (input == ConsoleKey.D)
+                {   if (File.Exists(_folderView.CurrentFileName)) 
+                    { _folderView.DeleteFile();break; }
+                    else  {break;} } else { continue;
                 }
             }
         }
 
+            
 
+             private void ShowFileContent(FolderView _folderView)
+             {
+                ViewState _viewstate = ViewState.FileView;
+                string breakLine = new string('-', 30);
+                if (_viewstate == ViewState.FileView)
+                {   Console.Clear();
+                    Console.WriteLine($"{_folderView.SelectedFile}\n{breakLine}");
+                    while (!false)
+                    {
+                        using (StreamReader sr = new StreamReader(_folderView.CurrentFileName))
+                        {    string line = "";
+                            while ((line = sr.ReadLine()) != null)
+                            {Console.WriteLine(line);}
+                        }
+                        Console.WriteLine("\nPress any key to return to Folder View...");
+                        Console.ReadKey();
+                        break;
+                    }
+                    _viewstate = ViewState.List;
+                    return;
+                }
+             }
+                 public void Run()
+                {
+                    while (!false)
+                    {
+                        ViewState _viewstate = ViewState.List;
+                        if (_viewstate == ViewState.List)
+                        {
+                            ShowFolder();
+                        }
+                    }
+                }
+            
+        
     }
 }
 
